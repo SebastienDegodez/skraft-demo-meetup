@@ -10,7 +10,7 @@ Fonctionnalité: Éligibilité à la souscription d'assurance
   # Règle (FR-005) : un conducteur dont le permis est suspendu est refusé
   @eligibility @happy-path @smoke
   Scénario: Un assureur refuse un conducteur au permis suspendu
-    Étant donné un conducteur âgé de 18 ans dont le permis est suspendu
+    Étant donné un conducteur âgé de 18 ans avec 2 ans de permis dont le permis est suspendu
     Et le véhicule est une "Voiture"
     Quand je demande une éligibilité
     Alors la demande est refusée avec le motif "Permis suspendu"
