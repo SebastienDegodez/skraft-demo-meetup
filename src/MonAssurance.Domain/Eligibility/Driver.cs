@@ -8,7 +8,7 @@ public sealed class Driver
     public Driver(DateOnly dateOfBirth, int licenseYears, bool isLicenseSuspended = false)
     {
         this.dateOfBirth = dateOfBirth;
-        license = new DrivingLicense(licenseYears, isLicenseSuspended);
+        license = new DrivingLicense(new LicenseYears(licenseYears), isLicenseSuspended);
     }
 
     public int Age(DateOnly today)
@@ -22,7 +22,7 @@ public sealed class Driver
         return age;
     }
 
-    public bool HasSuspendedLicense() => license.IsSuspended();
+    public bool CanDrive() => license.AllowsDriving();
 
-    public bool HasEnoughExperience(int minimumYears) => license.IsOldEnough(minimumYears);
+    internal bool HasHeldLicenseFor(LicenseYears minimum) => license.HasBeenHeldFor(minimum);
 }
