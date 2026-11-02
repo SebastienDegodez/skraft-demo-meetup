@@ -6,4 +6,5 @@ public sealed record CheckEligibilityQuery(
     DateOnly DateOfBirth,
     VehicleType VehicleType,
     int? Power,
-    int LicenseYears);
+    int LicenseYears,
+    bool IsLicenseSuspended = false);
