@@ -19,5 +19,11 @@
         "mutation": "dotnet stryker --since:{baseSha} --reporter json --output StrykerOutput"
       }
     }
-  ]
+  ],
+  "publish": {
+    "pullRequest": true,
+    "questionVersions": {
+      "pullRequest": 2
+    }
+  }
 }
