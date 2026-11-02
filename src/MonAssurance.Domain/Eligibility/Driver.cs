@@ -3,14 +3,12 @@ namespace MonAssurance.Domain.Eligibility;
 public sealed class Driver
 {
     private readonly DateOnly dateOfBirth;
-    private readonly int licenseYears;
-    private readonly bool isLicenseSuspended;
+    private readonly DrivingLicense license;
 
     public Driver(DateOnly dateOfBirth, int licenseYears, bool isLicenseSuspended = false)
     {
         this.dateOfBirth = dateOfBirth;
-        this.licenseYears = licenseYears;
-        this.isLicenseSuspended = isLicenseSuspended;
+        license = new DrivingLicense(licenseYears, isLicenseSuspended);
     }
 
     public int Age(DateOnly today)
@@ -24,7 +22,7 @@ public sealed class Driver
         return age;
     }
 
-    public bool HasSuspendedLicense() => isLicenseSuspended;
+    public bool HasSuspendedLicense() => license.IsSuspended();
 
-    public bool HasEnoughExperience(int minimumYears) => licenseYears >= minimumYears;
+    public bool HasEnoughExperience(int minimumYears) => license.IsOldEnough(minimumYears);
 }

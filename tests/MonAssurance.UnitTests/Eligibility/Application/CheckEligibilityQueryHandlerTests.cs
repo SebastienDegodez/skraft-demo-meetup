@@ -17,7 +17,7 @@ public class CheckEligibilityQueryHandlerTests
     }
 
     [Fact]
-    public void Handle_WhenSuspensionFlagIsOmitted_ReturnsEligibleAsBeforeStory2()
+    public void Handle_WhenSuspensionFlagIsOmitted_ReturnsEligible()
     {
         var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
