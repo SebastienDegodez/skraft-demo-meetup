@@ -16,7 +16,7 @@ public sealed class CheckEligibilityQueryHandler
     public EligibilityViewModel Handle(CheckEligibilityQuery query)
     {
         var today = DateOnly.FromDateTime(_timeProvider.GetUtcNow().UtcDateTime);
-        var driver = new Driver(query.DateOfBirth, query.LicenseYears);
+        var driver = new Driver(query.DateOfBirth, query.LicenseYears, query.IsLicenseSuspended);
         var vehicle = new Vehicle(query.VehicleType, query.Power);
 
         return _policy
