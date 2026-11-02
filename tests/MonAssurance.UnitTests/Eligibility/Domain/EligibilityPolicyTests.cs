@@ -8,6 +8,21 @@ public class EligibilityPolicyTests
     private static readonly DateOnly Today = new(2026, 1, 1);
     private readonly EligibilityPolicy _policy = new();
 
+    [Fact]
+    public void Evaluate_WhenDriverLicenseIsSuspended_ReturnsRefusedWithPermisSuspendu()
+    {
+        var driver = new Driver(Today.AddYears(-30), licenseYears: 10, isLicenseSuspended: true);
+        var vehicle = new Vehicle(VehicleType.Car, power: null);
+
+        var result = _policy.Evaluate(driver, vehicle, Today);
+
+        var (wasAccepted, capturedReason) = result.Match(
+            onAccepted: () => (true, (string?)null),
+            onRefused: r => (false, (string?)r));
+        Assert.False(wasAccepted);
+        Assert.Equal("Permis suspendu", capturedReason);
+    }
+
     // ── Age boundaries ──────────────────────────────────────────────────────
 
     [Fact]
