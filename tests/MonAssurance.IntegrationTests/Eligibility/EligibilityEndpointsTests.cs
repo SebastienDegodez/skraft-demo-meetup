@@ -36,5 +36,27 @@ public class EligibilityEndpointsTests : IClassFixture<WebApplicationFactory<Pro
         Assert.Null(result.RejectionReason);
     }
 
+    [Fact]
+    public async Task PostEligibility_WhenLicenseIsSuspended_Returns200AndRefusedWithPermisSuspendu()
+    {
+        var payload = new
+        {
+            dateOfBirth = new DateOnly(2001, 1, 1).ToString("yyyy-MM-dd"),
+            vehicleType = VehicleType.Car,
+            power = (int?)null,
+            licenseYears = 5,
+            isLicenseSuspended = true
+        };
+
+        var response = await _client.PostAsJsonAsync("/eligibility", payload);
+
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var result = await response.Content.ReadFromJsonAsync<EligibilityResponse>();
+        Assert.NotNull(result);
+        Assert.False(result.IsEligible);
+        Assert.Equal("Permis suspendu", result.RejectionReason);
+    }
+
     private sealed record EligibilityResponse(bool IsEligible, string? RejectionReason);
 }

@@ -17,6 +17,21 @@ public class CheckEligibilityQueryHandlerTests
     }
 
     [Fact]
+    public void Handle_WhenSuspensionFlagIsOmitted_ReturnsEligibleAsBeforeStory2()
+    {
+        var handler = BuildHandler(Today);
+        var query = new CheckEligibilityQuery(
+            DateOfBirth: Today.AddYears(-25),
+            VehicleType: VehicleType.Car,
+            Power: null,
+            LicenseYears: 5);
+
+        var result = handler.Handle(query);
+
+        Assert.True(result.IsEligible);
+    }
+
+    [Fact]
     public void Handle_WhenDriverIs18AndHasCar_ReturnsEligible()
     {
         var handler = BuildHandler(Today);
