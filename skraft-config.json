@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "name": "api",
+      "root": ".",
+      "stack": "dotnet",
+      "paths": {
+        "src": [
+          "src/"
+        ],
+        "tests": [
+          "tests/"
+        ]
+      },
+      "commands": {
+        "build": "dotnet build --nologo",
+        "test": "dotnet test --nologo",
+        "format": "dotnet format --verify-no-changes",
+        "mutation": "dotnet stryker --since:{baseSha} --reporter json --output StrykerOutput"
+      }
+    }
+  ]
+}
