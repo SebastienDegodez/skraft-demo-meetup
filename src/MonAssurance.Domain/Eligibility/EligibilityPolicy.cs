@@ -2,7 +2,7 @@ namespace MonAssurance.Domain.Eligibility;
 
 public sealed class EligibilityPolicy
 {
-    private static readonly LicenseYears HighPowerMotorcycleMinimumLicenseYears = new(5);
+    private static readonly LicenseYears highPowerMotorcycleMinimumLicenseYears = new(5);
 
     public EligibilityResult Evaluate(Driver driver, Vehicle vehicle, DateOnly today)
     {
@@ -16,7 +16,7 @@ public sealed class EligibilityPolicy
             return EligibilityResult.Refused("Conducteur trop jeune pour ce véhicule");
         }
 
-        if (vehicle.IsHighPowerMotorcycle() && !driver.HasHeldLicenseFor(HighPowerMotorcycleMinimumLicenseYears))
+        if (vehicle.IsHighPowerMotorcycle() && !driver.HasHeldLicenseFor(highPowerMotorcycleMinimumLicenseYears))
         {
             return EligibilityResult.Refused("Expérience insuffisante pour la puissance");
         }
