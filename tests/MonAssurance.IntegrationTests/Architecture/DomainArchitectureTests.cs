@@ -7,12 +7,12 @@ namespace MonAssurance.IntegrationTests.Architecture;
 
 public class DomainArchitectureTests
 {
-    private static readonly Assembly DomainAssembly = typeof(EligibilityPolicy).Assembly;
+    private static readonly Assembly domainAssembly = typeof(EligibilityPolicy).Assembly;
 
     [Fact]
     public void Domain_ShouldHaveNoFrameworkDependencies()
     {
-        var result = Types.InAssembly(DomainAssembly)
+        var result = Types.InAssembly(domainAssembly)
             .ShouldNot()
             .HaveDependencyOnAny(
                 "Microsoft.AspNetCore",

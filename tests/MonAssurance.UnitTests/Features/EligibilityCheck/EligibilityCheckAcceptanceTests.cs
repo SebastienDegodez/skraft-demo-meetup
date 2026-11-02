@@ -6,7 +6,7 @@ namespace MonAssurance.UnitTests.Features.EligibilityCheck;
 
 public class EligibilityCheckAcceptanceTests
 {
-    private static readonly DateOnly Today = new(2026, 1, 1);
+    private static readonly DateOnly today = new(2026, 1, 1);
 
     private static CheckEligibilityQueryHandler BuildHandler(DateOnly today)
     {
@@ -19,9 +19,9 @@ public class EligibilityCheckAcceptanceTests
     public void Handle_WhenDriverWithSuspendedLicenseRequestsCar_ReturnsRefusedWithPermisSuspendu()
     {
         // Un assureur refuse un conducteur au permis suspendu
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-18),
+            DateOfBirth: today.AddYears(-18),
             VehicleType: VehicleType.Car,
             Power: null,
             LicenseYears: 2,
@@ -37,9 +37,9 @@ public class EligibilityCheckAcceptanceTests
     public void Handle_WhenSuspendedDriverIsTooYoung_ReturnsRefusedWithPermisSuspendu()
     {
         // Un assureur refuse avec le motif permis suspendu un conducteur aussi trop jeune
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-17),
+            DateOfBirth: today.AddYears(-17),
             VehicleType: VehicleType.Car,
             Power: null,
             LicenseYears: 0,
@@ -55,9 +55,9 @@ public class EligibilityCheckAcceptanceTests
     public void Handle_WhenSuspendedDriverHasInsufficientExperienceOnHighPowerMotorcycle_ReturnsRefusedWithPermisSuspendu()
     {
         // Un assureur refuse avec le motif permis suspendu un motard sans assez d'expérience
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-30),
+            DateOfBirth: today.AddYears(-30),
             VehicleType: VehicleType.Motorcycle,
             Power: 120,
             LicenseYears: 2,

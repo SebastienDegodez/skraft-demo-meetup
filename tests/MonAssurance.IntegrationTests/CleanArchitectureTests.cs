@@ -11,16 +11,16 @@ public sealed class CleanArchitectureTests
     private const string InfrastructureNamespace = "MonAssurance.Infrastructure";
     private const string ApiNamespace = "MonAssurance.Api";
 
-    private static readonly Assembly DomainAssembly = typeof(MonAssurance.Domain.IDomainMarker).Assembly;
-    private static readonly Assembly ApplicationAssembly = typeof(MonAssurance.Application.IApplicationMarker).Assembly;
-    private static readonly Assembly InfrastructureAssembly = typeof(MonAssurance.Infrastructure.DependencyInjection).Assembly;
-    private static readonly Assembly ApiAssembly = typeof(Program).Assembly;
+    private static readonly Assembly domainAssembly = typeof(MonAssurance.Domain.IDomainMarker).Assembly;
+    private static readonly Assembly applicationAssembly = typeof(MonAssurance.Application.IApplicationMarker).Assembly;
+    private static readonly Assembly infrastructureAssembly = typeof(MonAssurance.Infrastructure.DependencyInjection).Assembly;
+    private static readonly Assembly apiAssembly = typeof(Program).Assembly;
 
     [Fact]
     public void Domain_ShouldNotHaveDependencyOn_OtherLayers()
     {
         // Act
-        var result = Types.InAssembly(DomainAssembly)
+        var result = Types.InAssembly(domainAssembly)
             .Should()
             .NotHaveDependencyOn(ApplicationNamespace)
             .And()
@@ -37,7 +37,7 @@ public sealed class CleanArchitectureTests
     public void Application_ShouldOnlyDependOn_Domain()
     {
         // Act
-        var result = Types.InAssembly(ApplicationAssembly)
+        var result = Types.InAssembly(applicationAssembly)
             .Should()
             .NotHaveDependencyOn(InfrastructureNamespace)
             .And()
@@ -52,7 +52,7 @@ public sealed class CleanArchitectureTests
     public void Infrastructure_ShouldNotHaveDependencyOn_Api()
     {
         // Act
-        var result = Types.InAssembly(InfrastructureAssembly)
+        var result = Types.InAssembly(infrastructureAssembly)
             .Should()
             .NotHaveDependencyOn(ApiNamespace)
             .GetResult();
@@ -67,7 +67,7 @@ public sealed class CleanArchitectureTests
         // API must go through Application layer — direct Domain references bypass the application boundary.
         // API -> Application -> Domain is correct. API -> Domain directly is not allowed.
         // Note: API is allowed to depend on Application (CQS without bus: handlers injected into endpoints).
-        var result = Types.InAssembly(ApiAssembly)
+        var result = Types.InAssembly(apiAssembly)
             .Should()
             .NotHaveDependencyOn(DomainNamespace)
             .GetResult();

@@ -2,25 +2,29 @@ namespace MonAssurance.Domain.Eligibility;
 
 public sealed class Driver
 {
-    private readonly DateOnly _dateOfBirth;
-    private readonly int _licenseYears;
-    private readonly bool _isLicenseSuspended;
+    private readonly DateOnly dateOfBirth;
+    private readonly int licenseYears;
+    private readonly bool isLicenseSuspended;
 
     public Driver(DateOnly dateOfBirth, int licenseYears, bool isLicenseSuspended = false)
     {
-        _dateOfBirth = dateOfBirth;
-        _licenseYears = licenseYears;
-        _isLicenseSuspended = isLicenseSuspended;
+        this.dateOfBirth = dateOfBirth;
+        this.licenseYears = licenseYears;
+        this.isLicenseSuspended = isLicenseSuspended;
     }
 
     public int Age(DateOnly today)
     {
-        var age = today.Year - _dateOfBirth.Year;
-        if (today < _dateOfBirth.AddYears(age)) age--;
+        var age = today.Year - dateOfBirth.Year;
+        if (today < dateOfBirth.AddYears(age))
+        {
+            age--;
+        }
+
         return age;
     }
 
-    public bool HasSuspendedLicense() => _isLicenseSuspended;
+    public bool HasSuspendedLicense() => isLicenseSuspended;
 
-    public bool HasEnoughExperience(int minimumYears) => _licenseYears >= minimumYears;
+    public bool HasEnoughExperience(int minimumYears) => licenseYears >= minimumYears;
 }
