@@ -4,22 +4,22 @@ namespace MonAssurance.Application.Eligibility.Queries.CheckEligibility;
 
 public sealed class CheckEligibilityQueryHandler
 {
-    private readonly EligibilityPolicy _policy;
-    private readonly TimeProvider _timeProvider;
+    private readonly EligibilityPolicy policy;
+    private readonly TimeProvider timeProvider;
 
     public CheckEligibilityQueryHandler(EligibilityPolicy policy, TimeProvider timeProvider)
     {
-        _policy = policy;
-        _timeProvider = timeProvider;
+        this.policy = policy;
+        this.timeProvider = timeProvider;
     }
 
     public EligibilityViewModel Handle(CheckEligibilityQuery query)
     {
-        var today = DateOnly.FromDateTime(_timeProvider.GetUtcNow().UtcDateTime);
+        var today = DateOnly.FromDateTime(timeProvider.GetUtcNow().UtcDateTime);
         var driver = new Driver(query.DateOfBirth, query.LicenseYears);
         var vehicle = new Vehicle(query.VehicleType, query.Power);
 
-        return _policy
+        return policy
             .Evaluate(driver, vehicle, today)
             .Match(
                 onAccepted: () => EligibilityViewModel.Accepted(),

@@ -8,11 +8,11 @@ namespace MonAssurance.IntegrationTests.Eligibility;
 
 public class EligibilityEndpointsTests : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly HttpClient _client;
+    private readonly HttpClient client;
 
     public EligibilityEndpointsTests(WebApplicationFactory<Program> factory)
     {
-        _client = factory.CreateClient();
+        client = factory.CreateClient();
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class EligibilityEndpointsTests : IClassFixture<WebApplicationFactory<Pro
             licenseYears = 5
         };
 
-        var response = await _client.PostAsJsonAsync("/eligibility", payload);
+        var response = await client.PostAsJsonAsync("/eligibility", payload);
 
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 

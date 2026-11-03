@@ -7,7 +7,7 @@ namespace MonAssurance.UnitTests.Eligibility.Application;
 
 public class CheckEligibilityQueryHandlerTests
 {
-    private static readonly DateOnly Today = new(2026, 1, 1);
+    private static readonly DateOnly today = new(2026, 1, 1);
 
     private static CheckEligibilityQueryHandler BuildHandler(DateOnly today)
     {
@@ -19,9 +19,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenDriverIs18AndHasCar_ReturnsEligible()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-18),
+            DateOfBirth: today.AddYears(-18),
             VehicleType: VehicleType.Car,
             Power: null,
             LicenseYears: 2);
@@ -35,9 +35,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenDriverIs17AndHasCar_ReturnsRefused()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-17),
+            DateOfBirth: today.AddYears(-17),
             VehicleType: VehicleType.Car,
             Power: null,
             LicenseYears: 1);
@@ -51,9 +51,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenDriverIs17AndHasMotorcycle_ReturnsRefused()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-17),
+            DateOfBirth: today.AddYears(-17),
             VehicleType: VehicleType.Motorcycle,
             Power: null,
             LicenseYears: 1);
@@ -67,9 +67,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenDriverIs15AndHasElectricScooter_ReturnsRefused()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-15),
+            DateOfBirth: today.AddYears(-15),
             VehicleType: VehicleType.ElectricScooter,
             Power: null,
             LicenseYears: 0);
@@ -83,9 +83,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenDriverIs16AndHasElectricScooter_ReturnsEligible()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-16),
+            DateOfBirth: today.AddYears(-16),
             VehicleType: VehicleType.ElectricScooter,
             Power: null,
             LicenseYears: 0);
@@ -99,9 +99,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenMotorcycleIsHighPowerAndDriverHas4YearsLicense_ReturnsRefused()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-25),
+            DateOfBirth: today.AddYears(-25),
             VehicleType: VehicleType.Motorcycle,
             Power: 101,
             LicenseYears: 4);
@@ -115,9 +115,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenMotorcycleIsHighPowerAndDriverHas5YearsLicense_ReturnsEligible()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-25),
+            DateOfBirth: today.AddYears(-25),
             VehicleType: VehicleType.Motorcycle,
             Power: 101,
             LicenseYears: 5);
@@ -131,9 +131,9 @@ public class CheckEligibilityQueryHandlerTests
     [Fact]
     public void Handle_WhenMotorcycleIsExactly100HpAndDriverHas4YearsLicense_ReturnsEligible()
     {
-        var handler = BuildHandler(Today);
+        var handler = BuildHandler(today);
         var query = new CheckEligibilityQuery(
-            DateOfBirth: Today.AddYears(-25),
+            DateOfBirth: today.AddYears(-25),
             VehicleType: VehicleType.Motorcycle,
             Power: 100,
             LicenseYears: 4);
